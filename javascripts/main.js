@@ -5,7 +5,7 @@ $(document).ready(function(){
   var computerChoice;
   var output;
   var result;
-  var gameOutcomes = { 'wins': 0, 'losses': 0, 'ties': 0 };
+  var outcomes = { 'wins': 0, 'losses': 0, 'ties': 0 };
 
   function computerChooses(){
     computerChoice = choices[( Math.floor(Math.random() * 3) )];
@@ -21,13 +21,13 @@ $(document).ready(function(){
     var paperLose = (playerChoice === 'paper' && computerChoice === 'scissors');
     var scissorsLose = (playerChoice === 'scissors' && computerChoice === 'rock');
     if ( rockWin || paperWin || scissorsWin ){
-      gameOutcomes.wins += 1;
+      outcomes.wins += 1;
       displayOutcome('win');
     } else if ( rockLose || paperLose || scissorsLose ) {
-      gameOutcomes.losses += 1;
+      outcomes.losses += 1;
       displayOutcome('lose');
     } else {
-      gameOutcomes.ties += 1;
+      outcomes.ties += 1;
       displayOutcome('tie');
     }
   }
@@ -45,20 +45,30 @@ $(document).ready(function(){
   }
 
   function refreshOutcomes() {
-    $('.win-counter').text(gameOutcomes.wins);
-    $('.loss-counter').text(gameOutcomes.losses);
-    $('.tie-counter').text(gameOutcomes.ties);
+    $('.win-counter').text(outcomes.wins);
+    $('.loss-counter').text(outcomes.losses);
+    $('.tie-counter').text(outcomes.ties);
+    var gamesPlayed = outcomes.wins + outcomes.losses + outcomes.ties;
+    if ( gamesPlayed == 0){
+      $('.win-percentage').text( 0 );
+      $('.loss-percentage').text( 0 );
+      $('.tie-percentage').text( 0 );
+    } else {
+      $('.win-percentage').text( Math.ceil((outcomes.wins / gamesPlayed) * 100) + '%');
+      $('.loss-percentage').text( Math.ceil((outcomes.losses / gamesPlayed) * 100) + '%' );
+      $('.tie-percentage').text( Math.ceil((outcomes.ties / gamesPlayed) * 100) + '%');
+    }
   }
 
   $('.new-game').click(function(){
-    gameOutcomes.wins = 0;
-    gameOutcomes.losses = 0;
-    gameOutcomes.ties = 0;
+    outcomes.wins = 0;
+    outcomes.losses = 0;
+    outcomes.ties = 0;
     refreshOutcomes();
     $('.outcome').empty();
   });
 
-  $('.buttons').click(function(){
+  $('.btn').click(function(){
     playerChoice = $(this).data().choice;
     $('.outcome').empty();
     computerChooses();

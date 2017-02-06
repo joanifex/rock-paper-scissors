@@ -34,24 +34,34 @@ $(document).ready(function(){
 
   function displayOutcome(result) {
     $('.outcome').append(output);
+    refreshOutcomes();
     if ( result === 'win'){
-      $('.win-counter').text(gameOutcomes.wins);
       $('.outcome').append('<p>You win!</p>');
     } else if ( result === 'lose'){
-      $('.loss-counter').text(gameOutcomes.losses);
       $('.outcome').append('<p>You lose.</p>');
     } else {
-      $('.tie-counter').text(gameOutcomes.ties);
       $('.outcome').append('<p>You tied.</p>');
     }
-
   }
 
-  $('button').click(function(){
+  function refreshOutcomes() {
+    $('.win-counter').text(gameOutcomes.wins);
+    $('.loss-counter').text(gameOutcomes.losses);
+    $('.tie-counter').text(gameOutcomes.ties);
+  }
+
+  $('.new-game').click(function(){
+    gameOutcomes.wins = 0;
+    gameOutcomes.losses = 0;
+    gameOutcomes.ties = 0;
+    refreshOutcomes();
+    $('.outcome').empty();
+  });
+
+  $('.buttons').click(function(){
     playerChoice = $(this).data().choice;
     $('.outcome').empty();
     computerChooses();
     result();
   });
-
 });

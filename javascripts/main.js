@@ -1,15 +1,11 @@
 $(document).ready(function(){
-  var $rock = $('.rock');
-  var $paper = $('.paper');
-  var $scissors = $('.scissors');
 
   var choices = ['rock', 'paper', 'scissors'];
   var playerChoice;
   var computerChoice;
   var output;
   var result;
-  var gamesPlayed;
-  var gamesWon;
+  var gameOutcomes = { 'wins': 0, 'losses': 0, 'ties': 0 };
 
   function computerChooses(){
     computerChoice = choices[( Math.floor(Math.random() * 3) )];
@@ -24,25 +20,31 @@ $(document).ready(function(){
     var rockLose = (playerChoice === 'rock' && computerChoice === 'paper');
     var paperLose = (playerChoice === 'paper' && computerChoice === 'scissors');
     var scissorsLose = (playerChoice === 'scissors' && computerChoice === 'rock');
-
     if ( rockWin || paperWin || scissorsWin ){
-      outcome('win');
+      gameOutcomes.wins += 1;
+      displayOutcome('win');
     } else if ( rockLose || paperLose || scissorsLose ) {
-      outcome('lose');
+      gameOutcomes.losses += 1;
+      displayOutcome('lose');
     } else {
-      outcome('tie');
+      gameOutcomes.ties += 1;
+      displayOutcome('tie');
     }
   }
 
-  function outcome(result) {
+  function displayOutcome(result) {
     $('.outcome').append(output);
     if ( result === 'win'){
+      $('.win-counter').text(gameOutcomes.wins);
       $('.outcome').append('<p>You win!</p>');
     } else if ( result === 'lose'){
+      $('.loss-counter').text(gameOutcomes.losses);
       $('.outcome').append('<p>You lose.</p>');
     } else {
+      $('.tie-counter').text(gameOutcomes.ties);
       $('.outcome').append('<p>You tied.</p>');
     }
+
   }
 
   $('button').click(function(){

@@ -35,18 +35,19 @@ $(document).ready(function(){
   }
 
   function outcome(result) {
-    $('.buttons').append(output);
+    $('.outcome').append(output);
     if ( result === 'win'){
-      $('.buttons').append('<p>You win!</p>');
+      $('.outcome').append('<p>You win!</p>');
     } else if ( result === 'lose'){
-      $('.buttons').append('<p>You lose.</p>');
+      $('.outcome').append('<p>You lose.</p>');
     } else {
-      $('.buttons').append('<p>You tied.</p>');
+      $('.outcome').append('<p>You tied.</p>');
     }
   }
 
   $('button').click(function(){
     playerChoice = $(this).data().choice;
+    $('.outcome').empty();
     computerChooses();
     result();
   });

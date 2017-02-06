@@ -26,27 +26,23 @@ $(document).ready(function(){
     var scissorsLose = (playerChoice === 'scissors' && computerChoice === 'rock');
 
     if ( rockWin || paperWin || scissorsWin ){
-      win();
+      outcome('win');
     } else if ( rockLose || paperLose || scissorsLose ) {
-      lose();
+      outcome('lose');
     } else {
-      tie();
+      outcome('tie');
     }
   }
 
-  function win() {
+  function outcome(result) {
     $('.buttons').append(output);
-    $('.buttons').append('<p>You win!</p>');
-  }
-
-  function lose() {
-    $('.buttons').append(output);
-    $('.buttons').append('<p>You lose.</p>');
-  }
-
-  function tie() {
-    $('.buttons').append(output);
-    $('.buttons').append('<p>You tied.</p>');
+    if ( result === 'win'){
+      $('.buttons').append('<p>You win!</p>');
+    } else if ( result === 'lose'){
+      $('.buttons').append('<p>You lose.</p>');
+    } else {
+      $('.buttons').append('<p>You tied.</p>');
+    }
   }
 
   $('button').click(function(){
